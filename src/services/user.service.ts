@@ -18,6 +18,12 @@ class UserService {
     );
   }
 
+  getUserData(inputEmail: string): IUser | null {
+    const user = this.users.find(({ email }) => inputEmail === email);
+    if (!user) return null;
+    return user;
+  }
+
   // getUserInfo(inputEmail: string): Omit<IUser, "password"> | null {
   //   const foundUser = this.users.find(({ email }) => inputEmail === email);
   //   if (!foundUser) return null;

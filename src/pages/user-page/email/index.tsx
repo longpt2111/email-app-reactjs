@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
 interface IPropsEmailPage {
   currentUserEmail: string;
@@ -7,7 +7,11 @@ interface IPropsEmailPage {
 
 const EmailPage: React.FC<IPropsEmailPage> = ({ currentUserEmail }) => {
   if (!currentUserEmail) return <Navigate to="/login" />;
-  return <div>EmailPage</div>;
+  return (
+    <div>
+      <Outlet />
+    </div>
+  );
 };
 
 export default EmailPage;

@@ -4,12 +4,13 @@ import logoUrlWhite from "../../../assets/images/connect-logo-white.svg";
 
 interface IPropsLogo {
   color: "dark" | "white";
+  className?: string;
 }
 
-const Logo: React.FC<IPropsLogo> = ({ color }) => {
+const Logo: React.FC<IPropsLogo> = ({ color, className }) => {
   return (
     <img
-      className="max-w-full"
+      className={`max-w-full ${className}`}
       src={color === "dark" ? logoUrlDark : logoUrlWhite}
       alt="connect"
     />
