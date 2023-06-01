@@ -3,10 +3,7 @@ import FormLabel from "../label";
 
 interface IPropsFormSelect extends SelectHTMLAttributes<HTMLSelectElement> {
   label: string;
-  error?: boolean;
-  onChange(
-    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ): void;
+  hasError?: boolean;
   options: {
     value: string;
     label: string;
@@ -17,8 +14,7 @@ const FormSelect: React.FC<IPropsFormSelect> = ({
   label,
   id = "",
   name = "",
-  error = false,
-  onChange,
+  hasError = false,
   options,
   ...props
 }) => {
@@ -27,11 +23,10 @@ const FormSelect: React.FC<IPropsFormSelect> = ({
       <FormLabel id={id} name={name} label={label} />
       <select
         className={`w-full bg-white rounded-md border border-gray-900 py-2.5 px-3 shadow-md ${
-          error && "border border-red-500"
+          hasError && "border border-red-500"
         }`}
         id={id}
         name={name}
-        onChange={onChange}
         {...props}
       >
         {options.map((option, index) => (

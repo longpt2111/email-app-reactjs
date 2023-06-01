@@ -3,16 +3,14 @@ import FormLabel from "../label";
 
 interface IPropsInput extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
-  error?: boolean;
+  hasError?: boolean;
 }
 
 const FormInput: React.FC<IPropsInput> = ({
   label,
   id = "",
   name = "",
-  value = "",
-  type = "",
-  error = false,
+  hasError = false,
   ...props
 }) => {
   return (
@@ -20,12 +18,10 @@ const FormInput: React.FC<IPropsInput> = ({
       <FormLabel label={label} id={id} name={name} />
       <input
         className={`w-full bg-white rounded-md border border-gray-900 py-2.5 px-3 shadow-md ${
-          error && "border border-red-500"
+          hasError && "border border-red-500"
         }`}
         id={id}
         name={name}
-        type={type}
-        value={value}
         {...props}
       />
     </div>

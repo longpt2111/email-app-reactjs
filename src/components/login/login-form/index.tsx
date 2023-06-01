@@ -8,7 +8,7 @@ import { userService } from "../../../services/user.service";
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("test@test");
-  const [error, setError] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
   const allUserEmailOptions = [
     { value: "", label: "------Choose an email" },
@@ -21,20 +21,19 @@ const LoginForm: React.FC = () => {
   const onHandleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    const name = event.target.name;
-    const value = event.target.value;
-    if (name === "email") setEmail(value);
-    if (name === "password") setPassword(value);
+    if (event.target.name === "email") setEmail(event.target.value);
+    if (event.target.name === "password") setPassword(event.target.value);
   };
 
   const onHandleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const isLoginValid = userService.isLoginValid({ email, password });
-    if (!isLoginValid) {
-      return setError("Wrong email or password !!");
+    const isValidLogin = userService.isValidLogin(email, password);
+    if (!isValidLogin) {
+      setErrorMsg("Wrong email or password !!");
+    } else {
+      setErrorMsg("");
+      // onHandleLogin(email);
     }
-    setError("");
-    // return onHandleLogin(email);
   };
 
   return (
@@ -60,9 +59,9 @@ const LoginForm: React.FC = () => {
                 value={password}
                 type="password"
                 onChange={onHandleChange}
-                error={!!error}
+                hasError={!!errorMsg}
               />
-              {error && <FormError>{error}</FormError>}
+              {errorMsg && <FormError>{errorMsg}</FormError>}
             </div>
             <div className="lg:col-span-12 mt-3">
               <Button type="submit" className="w-full bg-darkblue-800">

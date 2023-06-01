@@ -1,5 +1,6 @@
 import { IUser } from "../interfaces/data.interface";
 import users from "../data/users.json";
+
 class UserService {
   private users: IUser[];
 
@@ -11,14 +12,8 @@ class UserService {
     return this.users.map(({ email }) => email);
   }
 
-  isLoginValid({
-    email,
-    password,
-  }: {
-    email: IUser["email"];
-    password: IUser["password"];
-  }): boolean {
-    return !!this.users.find(
+  isValidLogin(email: IUser["email"], password: IUser["password"]): boolean {
+    return this.users.some(
       (user) => user.email === email && user.password === password
     );
   }
@@ -32,4 +27,4 @@ class UserService {
   // }
 }
 
-export const userService: UserService = new UserService(users);
+export const userService = new UserService(users);
