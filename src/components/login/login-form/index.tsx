@@ -1,45 +1,55 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import FormSelect from "../../UI-component/form/select";
 import FormInput from "../../UI-component/form/input";
 import Button from "../../UI-component/buttons";
 import FormError from "../../UI-component/form/error";
 import { userService } from "../../../services/user.service";
+import { useNavigate } from "react-router-dom";
 
-const LoginForm: React.FC = () => {
+interface IPropsLoginForm {
+  setCurrentUserEmail(email: string): void;
+}
+
+const LoginForm: React.FC<IPropsLoginForm> = ({ setCurrentUserEmail }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("test@test");
   const [errorMsg, setErrorMsg] = useState("");
+  const navigate = useNavigate();
 
-  const allUserEmailOptions = [
-    { value: "", label: "------Choose an email" },
-    ...userService.getAllUsersEmail.map((email) => ({
-      value: email,
-      label: email,
-    })),
-  ];
+  const allUserEmailOptions = useMemo(
+    () => [
+      { value: "", label: "------Choose an email" },
+      ...userService.getAllUsersEmail.map((email) => ({
+        value: email,
+        label: email,
+      })),
+    ],
+    []
+  );
 
-  const onHandleChange = (
+  const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     if (event.target.name === "email") setEmail(event.target.value);
     if (event.target.name === "password") setPassword(event.target.value);
   };
 
-  const onHandleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const isValidLogin = userService.isValidLogin(email, password);
     if (!isValidLogin) {
       setErrorMsg("Wrong email or password !!");
     } else {
       setErrorMsg("");
-      // onHandleLogin(email);
+      setCurrentUserEmail(email);
+      navigate("/main/email");
     }
   };
 
   return (
     <div className="grid lg:grid-cols-12 ">
       <div className="lg:col-span-12 ">
-        <form onSubmit={onHandleSubmit}>
+        <form onSubmit={handleSubmit}>
           <div className="grid lg:grid-cols-12 gap-4">
             <div className="lg:col-span-12 ">
               <FormSelect
@@ -47,7 +57,7 @@ const LoginForm: React.FC = () => {
                 id="email"
                 name="email"
                 value={email}
-                onChange={onHandleChange}
+                onChange={handleChange}
                 options={allUserEmailOptions}
               />
             </div>
@@ -58,7 +68,7 @@ const LoginForm: React.FC = () => {
                 name="password"
                 value={password}
                 type="password"
-                onChange={onHandleChange}
+                onChange={handleChange}
                 hasError={!!errorMsg}
               />
               {errorMsg && <FormError>{errorMsg}</FormError>}
