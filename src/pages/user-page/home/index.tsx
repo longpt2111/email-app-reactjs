@@ -1,7 +1,8 @@
 import React from "react";
+import UnderConstructionPage from "../../../components/user-page/under-construction";
 
 const HomePage: React.FC = () => {
-  return <div>HomePage</div>;
+  return <UnderConstructionPage />;
 };
 
 export default HomePage;
