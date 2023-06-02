@@ -74,7 +74,10 @@ const LoginForm: React.FC<IPropsLoginForm> = ({ setCurrentUserEmail }) => {
               {errorMsg && <FormError>{errorMsg}</FormError>}
             </div>
             <div className="lg:col-span-12 mt-3">
-              <Button type="submit" className="w-full bg-darkblue-800">
+              <Button
+                type="submit"
+                className="text-white w-full bg-darkblue-800"
+              >
                 Login
               </Button>
             </div>

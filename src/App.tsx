@@ -27,7 +27,7 @@ const App: React.FC = () => {
         <Route
           path="login"
           element={<Login setCurrentUserEmail={setCurrentUserEmail} />}
-        ></Route>
+        />
         <Route
           path="main"
           element={

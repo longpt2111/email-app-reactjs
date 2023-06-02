@@ -36,7 +36,7 @@ const NavBar: React.FC<IPropsNavBar> = ({
           <UserAvatar avatarUrl={currentUserData.avatarUrl} size={10} />
         </div>
         <Button
-          className="bg-red-500 hover:bg-red-400"
+          className="text-white bg-red-500 hover:bg-red-400"
           onClick={() => setCurrentUserEmail("")}
         >
           <FontAwesomeIcon icon={faPowerOff} />
