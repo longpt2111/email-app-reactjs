@@ -32,7 +32,7 @@ const NavBar: React.FC<IPropsNavBar> = ({
           <h6 className="font-bold text-sm">{currentUserData.name}</h6>
           <p className="text-sm text-gray-500 mb-0">{currentUserEmail}</p>
         </div>
-        <div>
+        <div className="w-10 h-10">
           <UserAvatar avatarUrl={currentUserData.avatarUrl} size={10} />
         </div>
         <Button

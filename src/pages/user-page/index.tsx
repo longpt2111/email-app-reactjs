@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import NavBar from "../../components/user-page/navigations/navbar";
 import Logo from "../../components/UI-component/logo";
 import FolderNav from "../../components/user-page/navigations/folder-nav";
@@ -14,6 +14,8 @@ const UserPage: React.FC<IPropsUserPage> = ({
   currentUserEmail,
   setCurrentUserEmail,
 }) => {
+  const { pathname } = useLocation();
+
   if (!currentUserEmail) return <Navigate to="/login" />;
   return (
     <div className="w-full min-h-screen flex items-center relative">
@@ -31,15 +33,15 @@ const UserPage: React.FC<IPropsUserPage> = ({
           <div className="w-1/5 h-full bg-darkblue-900 flex flex-col items-center justify-start">
             <PageNav />
           </div>
-          {/* <div className="w-4/5 h-full bg-darkblue-800 flex flex-col items-start justify-start">
-            {pathname.indexOf("/main/email") > -1 ? (
+          <div className="w-4/5 h-full bg-darkblue-800 flex flex-col items-start justify-start">
+            {pathname.indexOf("/main/email") !== -1 ? (
               <FolderNav currentUserEmail={currentUserEmail} />
             ) : (
               <p className="text-white text-center w-full py-16">
                 Construction
               </p>
             )}
-          </div> */}
+          </div>
         </div>
       </div>
       <Outlet />
