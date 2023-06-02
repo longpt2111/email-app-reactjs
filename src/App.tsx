@@ -43,17 +43,6 @@ const App: React.FC = () => {
             path="email"
             element={<EmailPage currentUserEmail={currentUserEmail} />}
           >
-            <Route
-              path="*"
-              index
-              element={
-                <div className="w-full h-full flex items-center justify-center">
-                  <p className="text-3xl text-center">
-                    Please choose <br /> a folder
-                  </p>
-                </div>
-              }
-            />
             {folders.map((folder, index) => (
               <Route
                 key={index}

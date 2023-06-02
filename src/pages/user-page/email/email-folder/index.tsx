@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import EmailSummary from "../../../../components/user-page/email/email-summary";
 import { IMessage } from "../../../../interfaces/data.interface";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 interface IPropsEmailFolder {
   messageDetails: IMessage[];
@@ -12,6 +12,7 @@ const EmailFolder: React.FC<IPropsEmailFolder> = ({
   messageDetails,
   folder,
 }) => {
+  const { pathname } = useLocation();
   const folderMessages = useMemo(
     () =>
       messageDetails.filter((messageDetail) => messageDetail.folder === folder),
@@ -47,9 +48,17 @@ const EmailFolder: React.FC<IPropsEmailFolder> = ({
           )}
         </div>
       </div>
-      <div className="w-3/4 h-full top-14 relative">
-        <Outlet context={folderMessages} />
-      </div>
+      {pathname.split("/").length === 4 ? (
+        <div className="w-3/4 h-full top-14 relative">
+          <div className="w-full h-full flex items-center justify-center">
+            <p className="text-3xl">Please choose an email</p>
+          </div>
+        </div>
+      ) : (
+        <div className="w-3/4 h-full top-14 relative">
+          <Outlet context={folderMessages} />
+        </div>
+      )}
     </>
   );
 };
