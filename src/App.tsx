@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import Login from "./pages/login";
 import { Routes, Route, Navigate } from "react-router-dom";
 import EmailPage from "./pages/user-page/email";
@@ -11,7 +11,14 @@ import MessageService from "./services/message.service";
 
 const App: React.FC = () => {
   const [currentUserEmail, setCurrentUserEmail] = useState<string>("");
-  const folders = new MessageService(currentUserEmail).getFolders;
+  const folders = useMemo(
+    () => new MessageService(currentUserEmail).getFolders,
+    [currentUserEmail]
+  );
+  const messageDetails = useMemo(
+    () => new MessageService(currentUserEmail).getMessageDetails,
+    [currentUserEmail]
+  );
 
   return (
     <Routes>
@@ -48,7 +55,16 @@ const App: React.FC = () => {
               }
             />
             {folders.map((folder, index) => (
-              <Route key={index} path={folder} element={<EmailFolder />}>
+              <Route
+                key={index}
+                path={folder}
+                element={
+                  <EmailFolder
+                    folder={folder}
+                    messageDetails={messageDetails}
+                  />
+                }
+              >
                 <Route path=":id" element={<EmailDetail />} />
               </Route>
             ))}

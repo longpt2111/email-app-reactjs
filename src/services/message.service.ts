@@ -2,10 +2,10 @@ import messagesData from "../data/messages.json";
 import { IMessage } from "../interfaces/data.interface";
 
 export default class MessageService {
+  private currentEmail: string;
   private messages: IMessage[] = messagesData.sort(
     (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
   );
-  private currentEmail: string;
 
   constructor(email: string) {
     this.currentEmail = email;
@@ -19,5 +19,11 @@ export default class MessageService {
       else if (a === "spam") return 1;
       else return 1;
     });
+  }
+
+  get getMessageDetails() {
+    return this.messages.filter(
+      (message) => message.to.email === this.currentEmail
+    );
   }
 }
