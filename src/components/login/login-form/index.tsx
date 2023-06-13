@@ -46,7 +46,6 @@ const LoginForm: React.FC<IPropsLoginForm> = ({
     } else {
       setErrorMsg("");
       setCurrentUserEmail(email);
-      // navigate("/main/email", { replace: true });
     }
   };
 
