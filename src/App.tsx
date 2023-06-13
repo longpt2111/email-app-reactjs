@@ -23,10 +23,15 @@ const App: React.FC = () => {
   return (
     <Routes>
       <Route path="/">
-        <Route index element={<Navigate to="/login" />}></Route>
+        <Route index element={<Navigate to="login" />}></Route>
         <Route
           path="login"
-          element={<Login setCurrentUserEmail={setCurrentUserEmail} />}
+          element={
+            <Login
+              currentUserEmail={currentUserEmail}
+              setCurrentUserEmail={setCurrentUserEmail}
+            />
+          }
         />
         <Route
           path="main"
@@ -37,7 +42,7 @@ const App: React.FC = () => {
             />
           }
         >
-          <Route index element={<Navigate to="email" />}></Route>
+          <Route index element={<Navigate to="email" />} />
           <Route path="home" element={<HomePage />} />
           <Route
             path="email"

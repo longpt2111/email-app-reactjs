@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useLayoutEffect, useMemo, useState } from "react";
 import FormSelect from "../../UI-component/form/select";
 import FormInput from "../../UI-component/form/input";
 import Button from "../../UI-component/buttons";
@@ -7,10 +7,14 @@ import { userService } from "../../../services/user.service";
 import { useNavigate } from "react-router-dom";
 
 interface IPropsLoginForm {
+  currentUserEmail: string;
   setCurrentUserEmail(email: string): void;
 }
 
-const LoginForm: React.FC<IPropsLoginForm> = ({ setCurrentUserEmail }) => {
+const LoginForm: React.FC<IPropsLoginForm> = ({
+  currentUserEmail,
+  setCurrentUserEmail,
+}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("test@test");
   const [errorMsg, setErrorMsg] = useState("");
@@ -42,9 +46,15 @@ const LoginForm: React.FC<IPropsLoginForm> = ({ setCurrentUserEmail }) => {
     } else {
       setErrorMsg("");
       setCurrentUserEmail(email);
-      navigate("/main/email");
+      // navigate("/main/email", { replace: true });
     }
   };
+
+  useLayoutEffect(() => {
+    if (currentUserEmail) {
+      navigate("/main/email", { replace: true });
+    }
+  }, [currentUserEmail, navigate]);
 
   return (
     <div className="grid lg:grid-cols-12 ">
